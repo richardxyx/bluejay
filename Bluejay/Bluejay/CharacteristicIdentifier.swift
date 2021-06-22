@@ -18,8 +18,12 @@ public struct CharacteristicIdentifier {
     public let uuid: CBUUID
 
     /// Create a `CharacteristicIdentifier` using a `CBCharacterstic`.
-    public init(_ cbCharacteristic: CBCharacteristic) {
-        self.service = ServiceIdentifier(uuid: cbCharacteristic.service.uuid)
+    public init?(_ cbCharacteristic: CBCharacteristic) {
+        guard let service = cbCharacteristic.service else {
+            return nil
+        }
+
+        self.service = ServiceIdentifier(uuid: service.uuid)
         self.uuid = cbCharacteristic.uuid
     }
 
@@ -46,7 +50,7 @@ public struct CharacteristicIdentifier {
 
     /// Check equality between a `CharacteristicIdentifier` and a `CBCharacterstic`.
     public static func == (lhs: CharacteristicIdentifier, rhs: CBCharacteristic) -> Bool {
-        return (lhs.uuid == rhs.uuid) && (lhs.service.uuid == rhs.service.uuid)
+        return (lhs.uuid == rhs.uuid) && (lhs.service.uuid == rhs.service?.uuid)
     }
 }
 
