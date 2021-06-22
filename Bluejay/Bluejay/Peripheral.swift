@@ -299,11 +299,12 @@ extension Peripheral: CBPeripheralDelegate {
     /// Captures CoreBluetooth's did receive a notification/value from a characteristic event and pass it to Bluejay's queue for processing.
     public func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         guard let characteristicIdentifier = CharacteristicIdentifier(characteristic) else {
-            debugLog("""
+            let message = """
                 Received notification/value from a characteristic with uuid: \(characteristic.uuid)
                 but associated service is nil.
-                """)
-            assertionFailure()
+            """
+            debugLog(message)
+            assertionFailure(message)
             return
         }
 
