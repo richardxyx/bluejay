@@ -112,6 +112,12 @@ public class Bluejay: NSObject { //swiftlint:disable:this type_body_length
     /// Helps distinguish one Bluejay instance from another.
     public let uuid = UUID()
 
+
+    /// The state of the underlying CBCentralManager
+    public var managerState: CBManagerState {
+        self.cbCentralManager.state
+    }
+
     /// Allows checking whether Bluetooth is powered on. Also returns false if Bluejay is not started yet.
     public var isBluetoothAvailable: Bool {
         if cbCentralManager == nil {
